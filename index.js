@@ -24,3 +24,23 @@ function displayPost(posts){
         postList.appendChild(li);
     });
 }
+
+async function fetchPosts(){
+    try {
+        // fetch data from jsonplaceholder API
+        const response = await fetch('https://jsonplaceholder.typicode.com/posts');
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const posts = await response.json();
+
+        // call displayPost function to display the posts
+        displayPost(posts);
+    } catch (error) {
+        console.error('Error fetching posts:', error);     
+    }
+}  
+
+fetchPosts();
