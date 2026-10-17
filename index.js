@@ -1,46 +1,43 @@
 // Write your code here!
 
-function displayPost(posts){
-    // select target list with id of post-list
-    const postList =document.querySelector('#post-list');
+function displayPosts(posts) {
+    // Select the target list with id of post-list
+    const postList = document.querySelector('#post-list');
 
-    // loop throuth post list
+    // Loop through the posts list
     posts.forEach(post => {
-        // create a new <li> tag
+        // Create a new <li> tag
         const li = document.createElement('li');
 
-        // create a new <h1> tag 
+        // Create a new <h1> tag and add the title
         const h1 = document.createElement('h1');
+        h1.textContent = post.title;
 
-        // create a new <p> tag
+        // Create a new <p> tag and add the body
         const p = document.createElement('p');
         p.textContent = post.body;
-        // append h1 and p to li
+
+        // Append h1 and p to li
         li.appendChild(h1);
         li.appendChild(p);
 
-
-        // append li to postList
+        // Append li to postList
         postList.appendChild(li);
     });
 }
 
-async function fetchPosts(){
+async function fetchPosts() {
     try {
-        // fetch data from jsonplaceholder API
+        // Fetch data from JSONPlaceholder API using async/await
         const response = await fetch('https://jsonplaceholder.typicode.com/posts');
+        const data = await response.json();
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const posts = await response.json();
-
-        // call displayPost function to display the posts
-        displayPost(posts);
+        // Call displayPosts after fetching data
+        displayPosts(data);
     } catch (error) {
-        console.error('Error fetching posts:', error);     
+        console.error('Error fetching posts:', error);
     }
-}  
+}
 
+// Automatically invoke fetchPosts when the script loads
 fetchPosts();
